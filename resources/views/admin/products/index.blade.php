@@ -3,7 +3,7 @@
 @section('content')
     <h2>Product List</h2>
     <a href="{{ route('admin.products.create') }}">Add New Product</a>
-    <table>
+    <table border="1" cellpadding="10" cellspacing="2" style="margin-top: 20px; width: 100%;">
         <tr>
             <th>Name</th>
             <th>Price</th>

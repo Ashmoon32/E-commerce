@@ -22,7 +22,8 @@
     <hr>
     @if (session('success'))
         <div class="alert">{{ session('success') }}</div>
-    @endif@yield('content')
+    @endif
+    @yield('content')
     
 </body>
 </html>
