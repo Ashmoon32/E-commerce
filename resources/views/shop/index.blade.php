@@ -13,4 +13,5 @@
         @endforeach
     </div>
     {{ $products->links() }}
+
 @endsection

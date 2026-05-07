@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Category;
+use App\Htp\AuthController;
 use Illuminate\Http\Request;
+
 
 class ProductController extends Controller
 {
@@ -32,7 +34,18 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|max:255',
+            'description' => 'nullable|string',
+            'price' => 'required|numeric|min:0',
+            'stock' => 'required|integer|min:0',
+            'category_id' => 'nullable|exists:categories,id',
+        ]);
+
+        Product::create($validated);
+
+        return redirect()->route('admin.products.index')
+            ->with('success', 'Product created successfully.');
     }
 
     /**
@@ -48,7 +61,8 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        $categories = Category::all();
+        return view('admin.products.edit', compact('product', 'categories'));
     }
 
     /**
@@ -56,7 +70,16 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|max:255',
+            'description' => 'nullable|string',
+            'price' => 'required|numeric|min:0',
+            'stock' => 'required|integer|min:0',
+            'categroy_id' => 'nullalbe|exists:categories,id',
+        ]);
+
+        $product->update($validated);
+        return redirect()->route('admin.products.index')->with('success', 'Product updated successfully.');
     }
 
     /**
@@ -64,6 +87,17 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        $product->delete();
+        return redirect()->route('admin.products.index')->with('success', 'Product deleted successfully.');
+    }
+
+    public function __construct()
+    {
+        middleware(function ($request, $next) {
+            if (auth()->user() && auth()->user()->email === 'admin@example.com') {
+                return $next($request);
+            }
+            abort(403);
+        });
     }
 }
