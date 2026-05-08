@@ -7,24 +7,36 @@
     <form action="{{ route('payment.pay', $order) }}" method="POST" class="max-w-md space-y-4">
         @csrf
 
-        <label class="flex items-center space-x-3 border border-gray-200 p-3 cursor-pointer hover:bg-gray-50">
-            <input type="radio" name="payment_method" value="kbz_pay" required>
-            <span>KBZ Pay</span>
+        <!-- KBZ Pay -->
+        <label class="flex items-center p-4 border border-gray-200 rounded cursor-pointer hover:border-black group">
+            <input type="radio" name="payment_method" value="kbz_pay" required class="sr-only">
+            <img src="{{ asset('images/payments/kbz.png') }}" alt="KBZ Pay" class="w-12 h-12 object-contain mr-4">
+            <span class="flex-1 font-medium">KBZ Pay</span>
+            <span class="hidden group-has-[:checked]:inline-block text-black font-bold">✓</span>
         </label>
 
-        <label class="flex items-center space-x-3 border border-gray-200 p-3 cursor-pointer hover:bg-gray-50">
-            <input type="radio" name="payment_method" value="wave_pay">
-            <span>Wave Pay</span>
+        <!-- Wave Pay -->
+        <label class="flex items-center p-4 border border-gray-200 rounded cursor-pointer hover:border-black group">
+            <input type="radio" name="payment_method" value="wave_pay" class="sr-only">
+            <img src="{{ asset('images/payments/wave.png') }}" alt="Wave Pay" class="w-12 h-12 object-contain mr-4">
+            <span class="flex-1 font-medium">Wave Pay</span>
+            <span class="hidden group-has-[:checked]:inline-block text-black font-bold">✓</span>
         </label>
 
-        <label class="flex items-center space-x-3 border border-gray-200 p-3 cursor-pointer hover:bg-gray-50">
-            <input type="radio" name="payment_method" value="aya_pay">
-            <span>AYA Pay</span>
+        <!-- AYA Pay -->
+        <label class="flex items-center p-4 border border-gray-200 rounded cursor-pointer hover:border-black group">
+            <input type="radio" name="payment_method" value="aya_pay" class="sr-only">
+            <img src="{{ asset('images/payments/aya.png') }}" alt="AYA Pay" class="w-12 h-12 object-contain mr-4">
+            <span class="flex-1 font-medium">AYA Pay</span>
+            <span class="hidden group-has-[:checked]:inline-block text-black font-bold">✓</span>
         </label>
 
-        <label class="flex items-center space-x-3 border border-gray-200 p-3 cursor-pointer hover:bg-gray-50">
-            <input type="radio" name="payment_method" value="bank">
-            <span>Bank Transfer</span>
+        <!-- Bank Transfer -->
+        <label class="flex items-center p-4 border border-gray-200 rounded cursor-pointer hover:border-black group">
+            <input type="radio" name="payment_method" value="bank" class="sr-only">
+            <img src="{{ asset('images/payments/bank.png') }}" alt="Bank Transfer" class="w-12 h-12 object-contain mr-4">
+            <span class="flex-1 font-medium">UAB Bank Transfer</span>
+            <span class="hidden group-has-[:checked]:inline-block text-black font-bold">✓</span>
         </label>
 
         <button type="submit" class="bg-black text-white px-6 py-2 text-sm hover:bg-gray-800 transition w-full">

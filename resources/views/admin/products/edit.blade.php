@@ -2,7 +2,7 @@
 
 @section('content')
     <h2 class="text-3xl font-light mb-6">Edit Product</h2>
-    <form action="{{ route('admin.products.update', $product) }}" method="POST" class="max-w-lg space-y-4">
+    <form action="{{ route('admin.products.update', $product) }}" method="POST" enctype="multipart/form-data" class="max-w-lg space-y-4">
         @csrf @method('PUT')
         <div>
             <label class="block text-sm font-medium mb-1">Name</label>
@@ -36,6 +36,15 @@
                     </option>
                 @endforeach
             </select>
+        </div>
+        <div>
+            <label class="block text-sm font-medium mb-1">Product Image</label>
+            @if($product->image)
+                <div class="mb-2">
+                    <img src="{{ asset('storage/' . $product->image) }}" class="w-24 h-24 object-cover border">
+                </div>
+            @endif
+            <input type="file" name="image" accept="image/*" class="w-full border border-gray-300 px-3 py-2">
         </div>
         <button type="submit" class="bg-black text-white px-6 py-2 text-sm hover:bg-gray-800 transition">Update
             Product</button>

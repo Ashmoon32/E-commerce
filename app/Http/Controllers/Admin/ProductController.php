@@ -40,7 +40,13 @@ class ProductController extends Controller
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
             'category_id' => 'nullable|exists:categories,id',
+            'image' => 'nullable|image|max:2048',
         ]);
+
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('products', 'public');
+            $validated['image'] = $path;
+        }
 
         Product::create($validated);
 
@@ -76,7 +82,17 @@ class ProductController extends Controller
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
             'categroy_id' => 'nullalbe|exists:categories,id',
+            'image' => 'nullable|image|max:2048',
         ]);
+
+        if ($request->hasFile('image')) {
+            // Optionally delete old image
+            if ($product->image) {
+                Storage::disk('public')->delete($product->image);
+            }
+            $path = $request->file('image')->store('products', 'public');
+            $validated['image'] = $path;
+        }
 
         $product->update($validated);
         return redirect()->route('admin.products.index')->with('success', 'Product updated successfully.');
