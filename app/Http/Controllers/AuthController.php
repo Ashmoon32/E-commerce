@@ -46,6 +46,10 @@ class AuthController extends Controller
         ]);
 
         if (Auth::attempt($credentials)) {
+            // If user is admin, redirect to admin dashboard
+            if (auth()->user()->role === 'admin') {
+                return redirect()->route('admin.dashboard');
+            }
             return redirect()->intended('/');
         }
 

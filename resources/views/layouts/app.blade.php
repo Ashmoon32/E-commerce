@@ -13,6 +13,7 @@
         <div class="max-w-7xl mx-auto flex items-center justify-between">
             <div class="space-x-6 text-sm">
                 <a href="/" class="hover:text-gray-300 font-semibold">Home</a>
+                <a href="/about" class="hover:text-gray-300 font-semibold">About</a>
                 <a href="/shop" class="hover:text-gray-300 font-semibold">Shop</a>
                 <a href="{{ route('cart.index') }}" class="hover:text-gray-300 font-semibold">Cart
                     ({{ \App\Services\Cart::totalItems() }})</a>
@@ -25,6 +26,9 @@
                 @auth
                     <span>Hello, {{ auth()->user()->name }}!</span>
                     <a href="{{ route('orders.index') }}" class="hover:text-gray-300">My Orders</a>
+                        @if(auth()->user()->role === 'admin')
+                            <a href="{{ route('admin.dashboard') }}" class="hover:text-gray-300 font-semibold">Admin Panel</a>
+                        @endif
                     <form action="{{ route('logout') }}" method="POST" class="inline">
                         @csrf
                         <button type="submit" class="hover:text-gray-300">Logout</button>
