@@ -35,12 +35,13 @@ class PaymentController extends Controller
             'status' => 'paid',
         ]);
 
-        foreach ($order->items as $item) {
-            $product = $item->product;
-            if ($product) {
-                $product->decrement('stock', $item->quantity);
-            }
-        }
+        // We are handled the stock decrement in the Order place
+        // foreach ($order->items as $item) {
+        //     $product = $item->product;
+        //     if ($product) {
+        //         $product->decrement('stock', $item->quantity);
+        //     }
+        // }
 
         return redirect()->route('payment.success', $order);
     }

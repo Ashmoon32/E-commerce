@@ -48,9 +48,14 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware('auth')->group(function () {
     Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+
     Route::post('/checkout', [CheckoutController::class, 'placeOrder'])->name('checkout.place');
+
     Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+
+    Route::put('/orders/{order}/cancel', [OrderController::class, 'cancel'])->name('orders.cancel');
 });
 
 Route::middleware('auth')->group(function () {

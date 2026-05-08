@@ -20,4 +20,26 @@ class OrderController extends Controller
             abort(403);
         return view('orders.show', compact('order'));
     }
+
+    public function cancel(Order $order)
+    {
+        // Only owner, only pending orders
+        if ($order->user_id !== auth()->id()) {
+            abort(403);
+        }
+        if ($order->status !== 'pending') {
+            return back()->with('error', 'Only pending orders can be cancelled.');
+        }
+
+        // Restore stock for each item
+        foreach ($order->items as $item) {
+            if ($item->product) {
+                $item->product->increment('stock', $item->quantity);
+            }
+        }
+
+        $order->update(['status' => 'cancelled']);
+
+        return redirect()->route('orders.show', $order)->with('success', 'Order cancelled, stock restored.');
+    }
 }

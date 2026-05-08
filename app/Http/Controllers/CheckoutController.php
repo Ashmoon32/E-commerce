@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Services\Cart;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Product;
 use Session;
 
 class CheckoutController extends Controller
@@ -25,6 +26,13 @@ class CheckoutController extends Controller
         if (empty($cartItems))
             return back()->with('error', 'Cart empty.');
 
+        foreach ($cartItems as $id => $item) {
+            $product = Product::find($id);
+            if (!$product || $product->stock < $item['quantity']) {
+                return back()->with('error', "Not enough stock for {$item['name']}. Only {$product->stock} left.");
+            }
+        }
+
         $total = Cart::totalPrice();
         $order = Order::create([
             'user_id' => auth()->id(),
@@ -39,7 +47,13 @@ class CheckoutController extends Controller
                 'quantity' => $item['quantity'],
                 'price' => $item['price'],
             ]);
+
+            $product = Product::find($id);
+            if ($product) {
+                $product->decrement('stock', $item['quantity']);
+            }
         }
+
 
         // Clear the cart
         Session::forget('cart');

@@ -19,18 +19,27 @@ class CartController extends Controller
     {
         $request->validate([
             'product_id' => 'required|exists:products,id',
-            'quantity' => 'nullable|integer|min:1'
+            'quantity' => 'required|integer|min:1',
         ]);
 
         $product = Product::findOrFail($request->product_id);
 
-        if ($request->quantity > $product->stock) {
-            return back()->withErrors(['quantity' => 'Only' . $product->stock . 'item(s) avaliable!']);
+        // 1. Get quantity already in cart for THIS product
+        $cart = Cart::getCart();
+        $alreadyInCart = $cart[$product->id]['quantity'] ?? 0;
+
+        // 2. Total if we add
+        $totalWanted = $alreadyInCart + $request->quantity;
+
+        // 3. Check against real database stock
+        if ($totalWanted > $product->stock) {
+            $remaining = $product->stock - $alreadyInCart;
+            return back()->with('error', "You already have $alreadyInCart in your cart. Only $remaining more left.");
         }
-        Cart::add($request->product_id, $request->quantity ?? 1);
+
+        Cart::add($product->id, $request->quantity);
         return back()->with('success', 'Added to cart!');
     }
-
     public function remove($productId)
     {
         Cart::remove($productId);

@@ -7,7 +7,16 @@
         <h1 class="text-3xl font-light mb-2">{{ $product->name }}</h1>
         <p class="text-sm text-gray-500 mb-4">Category: {{ $product->category->name ?? 'None' }}</p>
         <p class="text-2xl font-light mb-4">${{ number_format($product->price, 2) }}</p>
-        <p class="text-gray-700 mb-4">In Stock: <span class="font-semibold">{{ $product->stock }}</span></p>
+        <p class="text-gray-700 mb-4">
+            In Stock: <span class="font-semibold">{{ $product->stock }}</span>
+            @php
+                $cart = \App\Services\Cart::getCart();
+                $inCart = $cart[$product->id]['quantity'] ?? 0;
+            @endphp
+            @if($inCart > 0)
+                <span class="text-sm text-gray-500 ml-2">(You have {{ $inCart }} in cart)</span>
+            @endif
+        </p>
         <p class="text-gray-600 mb-6">{{ $product->description }}</p>
 
         @if($product->stock > 0)
