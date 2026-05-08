@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\Cart;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -20,6 +21,12 @@ class CartController extends Controller
             'product_id' => 'required|exists:products,id',
             'quantity' => 'nullable|integer|min:1'
         ]);
+
+        $product = Product::findOrFail($request->product_id);
+
+        if ($request->quantity > $product->stock) {
+            return back()->withErrors(['quantity' => 'Only' . $product->stock . 'item(s) avaliable!']);
+        }
         Cart::add($request->product_id, $request->quantity ?? 1);
         return back()->with('success', 'Added to cart!');
     }
@@ -36,6 +43,12 @@ class CartController extends Controller
             'product_id' => 'required|exists:products,id',
             'quantity' => 'required|integer|min:1',
         ]);
+
+        $product = Product::findOrFail($request->product_id);
+        if ($request->quantity > $product->stock) {
+            return back()->withErrors(['quantity' => 'Only ' . $product->stock . ' item(s) available.']);
+        }
+
         Cart::update($request->product_id, $request->quantity);
         return back()->with('success', 'Cart updated.');
     }

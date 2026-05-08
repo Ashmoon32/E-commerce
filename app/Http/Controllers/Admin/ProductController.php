@@ -91,13 +91,4 @@ class ProductController extends Controller
         return redirect()->route('admin.products.index')->with('success', 'Product deleted successfully.');
     }
 
-    public function __construct()
-    {
-        middleware(function ($request, $next) {
-            if (auth()->user() && auth()->user()->email === 'admin@example.com') {
-                return $next($request);
-            }
-            abort(403);
-        });
-    }
 }

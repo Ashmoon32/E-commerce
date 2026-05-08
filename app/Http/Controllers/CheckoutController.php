@@ -44,6 +44,6 @@ class CheckoutController extends Controller
         // Clear the cart
         Session::forget('cart');
 
-        return redirect()->route('orders.show', $order)->with('success', 'Order placed!');
+        return redirect()->route('payment.show', $order)->with('success', 'Order placed!');
     }
 }

@@ -20,7 +20,7 @@
                     Cart</button>
             </form>
         @else
-            <p class="text-red-600">Out of stock</p>
+            <p class="text-red-600 font-semibold text-lg mb-6">Sold Out</p>
         @endif
     </div>
 @endsection

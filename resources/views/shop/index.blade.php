@@ -6,11 +6,16 @@
         @foreach($products as $product)
             <div class="border border-gray-200 p-4 bg-white hover:shadow-sm transition">
                 <h3 class="font-semibold text-lg mb-1">{{ $product->name }}</h3>
-                <p class="text-sm text-gray-500 mb-2">{{ $product->category->name ?? 'No category' }}</p>
-                <p class="text-lg font-light mb-3">${{ number_format($product->price, 2) }}</p>
+                @if($product->stock == 0)
+                    <span class="inline-block bg-red-100 text-red-800 text-xs px-2 py-0.5 rounded mb-2">Sold Out</span>
+                @else
+                    <p class="text-sm text-gray-500 mb-2">{{ $product->category->name ?? 'No category' }}</p>
+                    <p class="text-lg font-light mb-3">${{ number_format($product->price, 2) }}</p>
+                @endif
                 <a href="{{ route('shop.show', $product) }}"
-                    class="inline-block border border-black px-4 py-1 text-sm hover:bg-black hover:text-white transition">View
-                    Details</a>
+                    class="inline-block border border-black px-4 py-1 text-sm hover:bg-black hover:text-white transition">
+                    @if($product->stock == 0) View @else View Details @endif
+                </a>
             </div>
         @endforeach
     </div>

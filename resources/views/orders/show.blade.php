@@ -4,6 +4,15 @@
     <a href="{{ route('orders.index') }}" class="text-sm text-gray-500 hover:text-black">&larr; Back to Orders</a>
     <h1 class="text-3xl font-light mt-2 mb-2">Order #{{ $order->id }}</h1>
     <p class="text-sm text-gray-500 mb-6">Status: <span class="font-semibold uppercase">{{ $order->status }}</span></p>
+    
+    @if($order->status === 'pending')
+        <div class="mb-6">
+            <a href="{{ route('payment.show', $order) }}"
+                class="inline-block bg-black text-white px-6 py-2 text-sm hover:bg-gray-800 transition">
+                Pay Now
+            </a>
+        </div>
+    @endif
 
     <div class="overflow-x-auto">
         <table class="w-full border-collapse border border-gray-200 mb-6">

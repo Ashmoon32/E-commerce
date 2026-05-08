@@ -8,7 +8,9 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderItemController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,8 +22,10 @@ Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
 
 Route::get('/shop/{product}', [ShopController::class, 'show'])->name('shop.show');
 
-Route::prefix('admin')->name('admin.')->group(function () {
+Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
     Route::resource('products', ProductController::class);
+
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });
 
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
@@ -47,4 +51,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/checkout', [CheckoutController::class, 'placeOrder'])->name('checkout.place');
     Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+});
+
+Route::middleware('auth')->group(function () {
+    Route::get('/payment/{order}', [PaymentController::class, 'show'])->name('payment.show');
+
+    Route::post('/payment/{order}', [PaymentController::class, 'pay'])->name('payment.pay');
+
+    Route::get('/payment/success/{order}', [PaymentController::class, 'success'])->name('payment.success');
 });

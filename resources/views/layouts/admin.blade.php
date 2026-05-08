@@ -12,6 +12,7 @@
     <nav class="bg-black text-white p-4">
         <div class="max-w-7xl mx-auto flex items-center space-x-6 text-sm">
             <a href="{{ route('admin.products.index') }}" class="hover:text-gray-300 font-semibold">Products</a>
+            <a href="{{ route('admin.dashboard') }}" class="hover:text-gray-300 font-semibold">Dashboard</a>
             <a href="/" target="_blank" class="hover:text-gray-300 ml-auto">View Site</a>
         </div>
     </nav>
