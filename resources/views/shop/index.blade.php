@@ -2,9 +2,9 @@
 
 @section('content')
     <h1 class="text-3xl font-light mb-8">Our Products</h1>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 ">
         @foreach($products as $product)
-            <div class="border border-gray-200 p-4 bg-white hover:shadow-sm transition">
+            <div class="border rounded-md border-gray-300 p-4 bg-white transform transition duration-300 hover:-translate-y-1 hover:shadow-lg">
                 @if($product->image)
                     <img src="{{ asset('storage/' . $product->image) }}" class="w-full h-48 object-cover mb-2">
                 @else

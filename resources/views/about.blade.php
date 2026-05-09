@@ -1,9 +1,18 @@
 @extends('layouts.app')
 
-@section('title', 'About')
+@section('title', 'About Us')
 
 @section('content')
-    <h1 class="text-3xl font-light mb-4">About Us</h1>
-    <p class="text-gray-700 max-w-2xl leading-relaxed">We are a small family shop passionate about quality and simplicity.
-    </p>
+    <div class="py-8">
+        <h1 class="text-4xl font-light mb-6">About Our Store</h1>
+        <div class="max-w-2xl space-y-4 text-gray-700 leading-relaxed">
+            <p>We started in 2025 with a simple idea: make quality products accessible without the noise. Our shop is
+                dedicated to minimal design, clear pricing, and an easy shopping experience.</p>
+            <p>We hand‑pick every item in our catalog. Whether it's tech, books, or everyday essentials, we focus on what
+                matters most — reliability, simplicity, and customer satisfaction.</p>
+            <p>Our customer support team is real people, ready to help. We believe in flat pricing, no hidden fees, and fast
+                delivery.</p>
+            <p>Thanks for being here. We hope you find something you love.</p>
+        </div>
+    </div>
 @endsection

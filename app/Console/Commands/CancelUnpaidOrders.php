@@ -12,7 +12,7 @@ class CancelUnpaidOrders extends Command
 
     public function handle()
     {
-        $cutoff = now()->subMinutes(30);
+        $cutoff = now()->subMinutes(1);
         $orders = Order::where('status', 'pending')
             ->where('created_at', '<', $cutoff)
             ->get();

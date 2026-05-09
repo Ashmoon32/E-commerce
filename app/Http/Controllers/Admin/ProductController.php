@@ -39,13 +39,12 @@ class ProductController extends Controller
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
-            'category_id' => 'nullable|exists:categories,id',
             'image' => 'nullable|image|max:2048',
+            'category_id' => 'nullable|exists:categories,id',   // ✅ correct spelling
         ]);
 
         if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('products', 'public');
-            $validated['image'] = $path;
+            $validated['image'] = $request->file('image')->store('products', 'public');
         }
 
         Product::create($validated);
@@ -81,21 +80,22 @@ class ProductController extends Controller
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
-            'categroy_id' => 'nullalbe|exists:categories,id',
             'image' => 'nullable|image|max:2048',
+            'category_id' => 'nullable|exists:categories,id',
         ]);
 
         if ($request->hasFile('image')) {
-            // Optionally delete old image
+            // Delete old image if it exists
             if ($product->image) {
-                Storage::disk('public')->delete($product->image);
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($product->image);
             }
-            $path = $request->file('image')->store('products', 'public');
-            $validated['image'] = $path;
+            $validated['image'] = $request->file('image')->store('products', 'public');
         }
 
         $product->update($validated);
-        return redirect()->route('admin.products.index')->with('success', 'Product updated successfully.');
+
+        return redirect()->route('admin.products.index')
+            ->with('success', 'Product updated successfully.');
     }
 
     /**
