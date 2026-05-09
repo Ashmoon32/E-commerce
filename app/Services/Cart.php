@@ -10,13 +10,35 @@ class Cart
     // Get the whole cart from session (or empty array)
     public static function getCart()
     {
-        return Session::get('cart', []);
+        $cart = Session::get(self::getSessionKey(), []);
+        // Remove expired items on every access
+        $cart = self::removeExpiredItemsFromArray($cart);
+        Session::put(self::getSessionKey(), $cart); // save cleaned cart back
+        return $cart;
+    }
+
+    // Get session key based on user
+    private static function getSessionKey()
+    {
+        return 'cart_' . (auth()->check() ? auth()->id() : 'guest');
+    }
+
+    // Clean expired items from a given cart array (without saving)
+    private static function removeExpiredItemsFromArray($cart)
+    {
+        $cutoff = now()->subHours(24)->timestamp;   // change to subMinutes(1) for testing
+        foreach ($cart as $id => $item) {
+            if (isset($item['added_at']) && $item['added_at'] < $cutoff) {
+                unset($cart[$id]);
+            }
+        }
+        return $cart;
     }
 
     // Save the whole cart array back to session
     public static function saveCart($cart)
     {
-        Session::put('cart', $cart);
+        Session::put(self::getSessionKey(), $cart);
     }
 
     // Add a product
@@ -31,6 +53,7 @@ class Cart
                 'name' => $product->name,
                 'price' => $product->price,
                 'quantity' => $quantity,
+                'added_at' => now()->timestamp,
             ];
         }
         self::saveCart($cart);
