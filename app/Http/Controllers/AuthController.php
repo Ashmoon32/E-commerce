@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Session;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
@@ -46,6 +47,9 @@ class AuthController extends Controller
         ]);
 
         if (Auth::attempt($credentials)) {
+            // Merge any guest cart into the user's cart
+            \App\Services\Cart::mergeGuestCart();
+
             // If user is admin, redirect to admin dashboard
             if (auth()->user()->role === 'admin') {
                 return redirect()->route('admin.dashboard');
@@ -59,6 +63,7 @@ class AuthController extends Controller
     public function logout()
     {
         Auth::logout();
+        Session::forget('cart_guest');
         return redirect('/');
     }
 }
