@@ -1,59 +1,79 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🛍️ Modern E-Commerce Platform (Laravel)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A fully functional, open‑source e‑commerce web application built with **Laravel 12**, **Blade**, **Tailwind CSS (CDN)**, and **MySQL**.  
+Designed as a real‑world learning project, it simulates a complete online shop – from product browsing to payment – with a special focus on Myanmar payment gateways.
 
-## About Laravel
+> **Status:** MVP – Ready for demonstration, learning, and further customization.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## ✨ Features
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 🧑‍💼 User Features
+- **User Registration & Login** – Manual authentication (no starter kit).
+- **Product Catalog** – Browse products, filter by category, search by name/category.
+- **Product Detail** – View details, images, and stock info.
+- **Shopping Cart** – Session‑based cart with quantity control and expiration.
+- **Checkout** – Place an order (stock is reserved immediately).
+- **Payment Simulation** – Choose between **KBZ Pay**, **Wave Pay**, **AYA Pay**, or **Bank Transfer** (visual cards, no real money).
+- **Order History** – See all orders (pending, paid, cancelled).
+- **Cancel Order** – Cancel pending orders (stock is restored).
 
-## Learning Laravel
+### 🛡️ Admin Features
+- **Role‑based Authorization** – Separate `admin` role with custom middleware.
+- **Admin Dashboard** – Monitor all orders (customer, total, status, payment method).
+- **Product CRUD** – Create, read, update, delete products.
+- **Image Upload** – Upload product images (stored locally).
+- **Category Management** – Pre‑seeded categories (Electronics, Books, Clothing).
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+### 🧠 Smart Inventory Logic
+- Stock is deducted **immediately** when an order is placed (prevents overselling).
+- **Auto‑cancellation** of unpaid orders after a configurable time (scheduler).
+- **Cart expiration** – Items older than 24 h are removed automatically.
+- **“Sold Out”** badge and disabled cart button when stock hits zero.
+- Per‑user cart isolation (guest cart merges on login).
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 🎨 UI / UX
+- Clean, **black‑and‑white minimalist design**.
+- Fully responsive (mobile hamburger menu).
+- **Tailwind CSS via CDN** (no build step required).
+- Smooth hover animations on product cards.
+- Home page carousel of popular products (Alpine.js).
 
-## Laravel Sponsors
+---
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## 📸 Screenshots
 
-### Premium Partners
+> _Add your own screenshots here after deployment._
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+| Home Page | Shop Page | Admin Dashboard | Payment Selection |
+|-----------|-----------|-----------------|-------------------|
+| ![Home](public/screenshots/home.png) | ![Shop](public/screenshots/shop.png) | ![Admin](public/screenshots/admin.png) | ![Payment](public/screenshots/payment.png) |
 
-## Contributing
+---
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## 🚀 Tech Stack
 
-## Code of Conduct
+- **Backend:** Laravel 12, PHP 8.2+
+- **Frontend:** Blade, Tailwind CSS (CDN), Alpine.js
+- **Database:** MySQL
+- **Session Storage:** File (or database)
+- **Authentication:** Manual (custom AuthController)
+- **Scheduling:** Laravel Scheduler (for order auto‑cancel)
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+## 📦 Installation (Local Development)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Prerequisites
+- PHP ≥ 8.2
+- Composer
+- MySQL
+- Node.js & npm (only for optional Vite build; not required if using Tailwind CDN)
 
-## License
+### Step‑by‑Step
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/your-username/your-repo.git
+   cd your-repo
