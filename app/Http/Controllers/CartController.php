@@ -38,7 +38,7 @@ class CartController extends Controller
         }
 
         Cart::add($product->id, $request->quantity);
-        return back()->with('success', 'Added to cart!');
+        return redirect()->route('cart.index')->with('success', 'Product added to cart!');
     }
     public function remove($productId)
     {

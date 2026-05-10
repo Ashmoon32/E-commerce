@@ -122,4 +122,8 @@ class Cart
         Session::put($userKey, $userCart);
         Session::forget($guestKey);   // clear the guest cart
     }
+    public static function clear()
+    {
+        Session::forget(self::getSessionKey());
+    }
 }
