@@ -64,14 +64,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/payment/success/{order}', [PaymentController::class, 'success'])->name('payment.success');
 });
 
-Route::get('/cloudinary-test', function () {
-    try {
-        $result = CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::upload(
-            public_path('favicon.ico'),
-            ['folder' => 'ecommerce-products']
-        );
-        dd($result);
-    } catch (\Exception $e) {
-        dd('Error: ' . $e->getMessage());
-    }
-});
+// Route::get('/cloudinary-test', function () {
+//     try {
+//         $result = CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::upload(
+//             public_path('favicon.ico'),
+//             ['folder' => 'ecommerce-products']
+//         );
+//         dd($result);
+//     } catch (\Exception $e) {
+//         dd('Error: ' . $e->getMessage());
+//     }
+// });

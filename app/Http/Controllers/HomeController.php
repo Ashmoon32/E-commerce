@@ -10,11 +10,9 @@ use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
-
-
     public function index()
     {
-        // Popular (best selling, paid orders only)
+        // Popular products (global)
         $popularProducts = Product::select('products.*')
             ->join('order_items', 'products.id', '=', 'order_items.product_id')
             ->join('orders', 'order_items.order_id', '=', 'orders.id')
@@ -24,13 +22,32 @@ class HomeController extends Controller
             ->take(5)
             ->get();
 
-        // New arrivals (latest 4)
+        // New arrivals
         $latestProducts = Product::latest()->take(4)->get();
 
-        // Categories for the "Shop by Category" section
+        // Categories
         $categories = Category::all();
 
-        return view('home', compact('popularProducts', 'latestProducts', 'categories'));
+        // Best-selling product per category (to show its image)
+        $categoryPopularProducts = [];
+        foreach ($categories as $category) {
+            $popularProduct = Product::select('products.*')
+                ->join('order_items', 'products.id', '=', 'order_items.product_id')
+                ->join('orders', 'order_items.order_id', '=', 'orders.id')
+                ->where('orders.status', 'paid')
+                ->where('products.category_id', $category->id)
+                ->groupBy('products.id')
+                ->orderByDesc(DB::raw('SUM(order_items.quantity)'))
+                ->first();
+            $categoryPopularProducts[$category->id] = $popularProduct;
+        }
+
+        return view('home', compact(
+            'popularProducts',
+            'latestProducts',
+            'categories',
+            'categoryPopularProducts'
+        ));
     }
 
     public function about()
