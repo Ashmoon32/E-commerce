@@ -6,8 +6,6 @@ use App\Http\Controllers\ShopController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\OrderController;
-use App\Http\Controllers\OrderItemController;
-use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -64,4 +62,16 @@ Route::middleware('auth')->group(function () {
     Route::post('/payment/{order}', [PaymentController::class, 'pay'])->name('payment.pay');
 
     Route::get('/payment/success/{order}', [PaymentController::class, 'success'])->name('payment.success');
+});
+
+Route::get('/cloudinary-test', function () {
+    try {
+        $result = CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::upload(
+            public_path('favicon.ico'),
+            ['folder' => 'ecommerce-products']
+        );
+        dd($result);
+    } catch (\Exception $e) {
+        dd('Error: ' . $e->getMessage());
+    }
 });

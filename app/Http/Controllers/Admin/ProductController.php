@@ -7,6 +7,8 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Htp\AuthController;
 use Illuminate\Http\Request;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+use Illuminate\Support\Facades\Http;
 
 
 class ProductController extends Controller
@@ -40,11 +42,24 @@ class ProductController extends Controller
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
             'image' => 'nullable|image|max:2048',
-            'category_id' => 'nullable|exists:categories,id',   // ✅ correct spelling
+            'category_id' => 'nullable|exists:categories,id',
         ]);
 
         if ($request->hasFile('image')) {
-            $validated['image'] = $request->file('image')->store('products', 'public');
+            $uploadedFile = $request->file('image');
+            $response = Http::attach(
+                'image',
+                file_get_contents($uploadedFile->getRealPath()),
+                $uploadedFile->getClientOriginalName()
+            )->post('https://api.imgbb.com/1/upload', [
+                        'key' => env('IMGBB_API_KEY'),
+                    ]);
+
+            if ($response->successful()) {
+                $validated['image'] = $response->json('data.url');
+            } else {
+                return back()->with('error', 'Image upload failed.');
+            }
         }
 
         Product::create($validated);
@@ -85,11 +100,20 @@ class ProductController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            // Delete old image if it exists
-            if ($product->image) {
-                \Illuminate\Support\Facades\Storage::disk('public')->delete($product->image);
+            $uploadedFile = $request->file('image');
+            $response = Http::attach(
+                'image',
+                file_get_contents($uploadedFile->getRealPath()),
+                $uploadedFile->getClientOriginalName()
+            )->post('https://api.imgbb.com/1/upload', [
+                        'key' => env('IMGBB_API_KEY'),
+                    ]);
+
+            if ($response->successful()) {
+                $validated['image'] = $response->json('data.url');
+            } else {
+                return back()->with('error', 'Image upload failed.');
             }
-            $validated['image'] = $request->file('image')->store('products', 'public');
         }
 
         $product->update($validated);
