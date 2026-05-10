@@ -26,7 +26,7 @@ class Cart
     // Clean expired items from a given cart array (without saving)
     private static function removeExpiredItemsFromArray($cart)
     {
-        $cutoff = now()->subHours(2)->timestamp;   // change to subMinutes(1) for testing
+        $cutoff = now()->subHours(24)->timestamp;   // change to subMinutes(1) for testing
         foreach ($cart as $id => $item) {
             if (isset($item['added_at']) && $item['added_at'] < $cutoff) {
                 unset($cart[$id]);

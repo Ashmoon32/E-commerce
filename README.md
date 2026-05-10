@@ -10,6 +10,7 @@ Designed as a real‑world learning project, it simulates a complete online shop
 ## ✨ Features
 
 ### 🧑‍💼 User Features
+
 - **User Registration & Login** – Manual authentication (no starter kit).
 - **Product Catalog** – Browse products, filter by category, search by name/category.
 - **Product Detail** – View details, images, and stock info.
@@ -20,6 +21,7 @@ Designed as a real‑world learning project, it simulates a complete online shop
 - **Cancel Order** – Cancel pending orders (stock is restored).
 
 ### 🛡️ Admin Features
+
 - **Role‑based Authorization** – Separate `admin` role with custom middleware.
 - **Admin Dashboard** – Monitor all orders (customer, total, status, payment method).
 - **Product CRUD** – Create, read, update, delete products.
@@ -27,6 +29,7 @@ Designed as a real‑world learning project, it simulates a complete online shop
 - **Category Management** – Pre‑seeded categories (Electronics, Books, Clothing).
 
 ### 🧠 Smart Inventory Logic
+
 - Stock is deducted **immediately** when an order is placed (prevents overselling).
 - **Auto‑cancellation** of unpaid orders after a configurable time (scheduler).
 - **Cart expiration** – Items older than 24 h are removed automatically.
@@ -34,21 +37,12 @@ Designed as a real‑world learning project, it simulates a complete online shop
 - Per‑user cart isolation (guest cart merges on login).
 
 ### 🎨 UI / UX
+
 - Clean, **black‑and‑white minimalist design**.
 - Fully responsive (mobile hamburger menu).
 - **Tailwind CSS via CDN** (no build step required).
 - Smooth hover animations on product cards.
 - Home page carousel of popular products (Alpine.js).
-
----
-
-## 📸 Screenshots
-
-> _Add your own screenshots here after deployment._
-
-| Home Page | Shop Page | Admin Dashboard | Payment Selection |
-|-----------|-----------|-----------------|-------------------|
-| ![Home](public/screenshots/home.png) | ![Shop](public/screenshots/shop.png) | ![Admin](public/screenshots/admin.png) | ![Payment](public/screenshots/payment.png) |
 
 ---
 
@@ -66,6 +60,7 @@ Designed as a real‑world learning project, it simulates a complete online shop
 ## 📦 Installation (Local Development)
 
 ### Prerequisites
+
 - PHP ≥ 8.2
 - Composer
 - MySQL
@@ -74,6 +69,7 @@ Designed as a real‑world learning project, it simulates a complete online shop
 ### Step‑by‑Step
 
 1. **Clone the repository**
-   ```bash
-   git clone https://github.com/your-username/your-repo.git
-   cd your-repo
+    ```bash
+    git clone https://github.com/your-username/your-repo.git
+    cd your-repo
+    ```
