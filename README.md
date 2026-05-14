@@ -3,7 +3,7 @@
 A fully functional, open‑source e‑commerce web application built with **Laravel 12**, **Blade**, **Tailwind CSS (CDN)**, and **MySQL**.  
 Designed as a real‑world learning project, it simulates a complete online shop – from product browsing to payment – with a special focus on Myanmar payment gateways.
 
-Live demo - [[E-commerce](https://e-commerce-production-8dfd.up.railway.app/)]
+Live demo -[[E-commerce](https://e-commerce-production-8dfd.up.railway.app/)]
 
 > **Status:** MVP – Ready for demonstration, learning, and further customization.
 
@@ -72,6 +72,6 @@ Live demo - [[E-commerce](https://e-commerce-production-8dfd.up.railway.app/)]
 
 1. **Clone the repository**
     ```bash
-    git clone https://github.com/your-username/your-repo.git
-    cd your-repo
+    git clone https://github.com/Ashmoon32/E-commerce.git
+    cd E-commerce
     ```
